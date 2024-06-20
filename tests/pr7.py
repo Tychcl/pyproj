@@ -2,7 +2,6 @@ import random
 from pprint import pprint
 from prettytable import PrettyTable
 import matplotlib.pyplot as plt
-import numpy as np
 
 #Исходные переменные
 n = 2699
@@ -28,5 +27,15 @@ t.add_column("Pi",list(map(lambda z: str(z)+"/"+str(n), [i for i in x])))
 print(t)
 print("X - Значение\nNi - Частота\nPi - Частость")
 print(f"Мода: {x.index(max(x))+1}, Медиана: 3, 4")
+
+t = list(map(lambda z: str(z+1), range(len(x)))) #массив
+s = x #массив
+plt.figure(figsize=(9, 3))
+plt.subplot(131)
+plt.bar(t,x)
+for i in x:
+    plt.annotate(str(i),xy=(x.index(i)-0.45,i+5))
+plt.ylim(0,600)
+plt.show()
 
 #https://matplotlib.online/project?id=0

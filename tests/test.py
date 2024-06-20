@@ -12,14 +12,14 @@ for i in range(n):
     x[h]+=1
 
 # Data for plotting
-t = np.arange(0.0, 2.0, 0.01) #массив
-s = 1 + np.sin(2 * np.pi * t) #массив
-
-fig, ax = plt.subplots()
-ax.plot(t, s)
-
-ax.set(xlabel='time (s)', ylabel='voltage (mV)',
-       title='About as simple as it gets, folks')
-ax.grid(ls=':')
+t = list(map(lambda z: str(z+1), range(len(x)))) #массив
+s = x #массив
+plt.figure(figsize=(9, 3))
+plt.subplot(131)
+plt.bar(t,x)
+for i in x:
+    plt.annotate(str(i),xy=(x.index(i)-0.45,i))
+    print(x.index(i)+1, i )
+plt.ylim(0,600)
 plt.show()
 print(t)
