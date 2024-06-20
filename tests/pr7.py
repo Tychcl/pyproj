@@ -25,4 +25,4 @@ t.add_column("Pi",list(map(lambda z: str(z)+"/"+str(n), [i for i in x])))
 #Вывод
 print(t)
 print("X - Значение\nNi - Частота\nPi - Частость")
-print(f"Мода: {max(x)}, Медиана: 3, 4")
+print(f"Мода: {x.index(max(x))+1}, Медиана: 3, 4")
