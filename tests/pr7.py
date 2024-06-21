@@ -60,5 +60,6 @@ print(f"\nБв = {math.sqrt(Db)}")
 print(f"\nS2 = {n/(n-1)*Db}")
 print(f"\nS = {math.sqrt(n/(n-1)*Db)}")
 print(f"\nV = {(math.sqrt(Db))/xb}")
-print(f"\nd = {(math.sqrt(Db))/xb}")
+print(f"\nd = {sum(map(lambda z: (z-xb)*x.index(z)+1, x))/n}")
+
 #https://matplotlib.online/project?id=0
