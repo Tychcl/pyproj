@@ -1,6 +1,36 @@
 import eel
-import os
-#netstat -ano|findstr 4444
-#tskill [ласт цифра команды выше]
+import subprocess
+import winreg
+import re
+
+def get_default_browser_windows():
+    browser_path = ""
+    try:
+        key = winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"HTTP\shell\open\command")
+        browser_path, _ = winreg.QueryValueEx(key, "")
+        winreg.CloseKey(key)
+        browser_name = re.findall(r'\"(.*?)\"', browser_path)[0].split("\\")[-1]
+        browser_name = browser_name.replace(".exe", "")
+    except WindowsError:
+        browser_name = "Неизвестно"
+    return browser_name
+
+#netstat -ano|findstr 8000
+#tskill [pid]
+
+# Команда для выполнения
+command = 'netstat -ano|findstr 8000'
+
+# Выполнение команды и получение результата
+result = subprocess.run(command, capture_output=True, text=True, shell=True)
+
+# Вывод результата
+if result.returncode == 0:
+    print("Команда выполнена успешно.")
+    print("Результат:\n", result.stdout)
+else:
+    print("Произошла ошибка.")
+    print("Сообщение об ошибке:\n", result.stderr)
+
 eel.init("web")
-eel.start("main.html", size=(300, 600))
+eel.start("main.html", size=(300, 600), mode=get_default_browser_windows())
