@@ -23,14 +23,9 @@ command = 'netstat -ano|findstr 8000'
 
 # Выполнение команды и получение результата
 result = subprocess.run(command, capture_output=True, text=True, shell=True)
+print(result.stdout)
 
-# Вывод результата
-if result.returncode == 0:
-    print("Команда выполнена успешно.")
-    print("Результат:\n", result.stdout)
-else:
-    print("Произошла ошибка.")
-    print("Сообщение об ошибке:\n", result.stderr)
+print(get_default_browser_windows())
 
-eel.init("web")
-eel.start("main.html", size=(300, 600), mode=get_default_browser_windows())
+eel.init('web')
+eel.start('main.html', size=(300, 600), mode=get_default_browser_windows())
