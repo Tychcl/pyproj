@@ -18,7 +18,7 @@ hist, bin_edges = np.histogram(mas, bins=intervals)
 # Объединение интервалов, если частота меньше 5
 def merge_intervals(hist, bin_edges):
     new_hist = []
-    new_edges = []
+    new_edges = [bin_edges[0]]
     i = 0
     while i < len(hist):
         if hist[i] < 5 and i < len(hist) - 1:
@@ -38,3 +38,5 @@ print(f"1) R = {R} h = {h}")
 print("2) Интервалы:", intervals)
 print("3) Эмпирические частоты:", hist)
 print("Интервалы после объединения:", bin_edges)
+for i in range(len(bin_edges)-1):
+    print(f"{round(bin_edges[i],2)} ; {round(bin_edges[i+1],2)} | {round((bin_edges[i] + bin_edges[i+1])/2,2)} | {hist[i]}")
