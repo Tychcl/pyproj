@@ -6,9 +6,10 @@ str = "-15.536759561549772 38.32170754074998 23.984390321619106 41.7003104386584
 mas = sorted(list(map(lambda z: round(float(z),2), str.split(" "))))
 Xmax = max(mas)
 Xmin = min(mas)
+n = len(mas)
 #1)
 R = Xmax - Xmin
-h = round(R/(1+ math.log2(len(mas))),2)
+h = round(R/(1+ math.log2(n)),2)
 #2)
 intervals = np.arange(Xmin, Xmax + h, h)
 #3)
