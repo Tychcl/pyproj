@@ -1,41 +1,79 @@
-import random
-from pprint import pprint
-from prettytable import PrettyTable
+import numpy as np
 import matplotlib.pyplot as plt
+from scipy import stats
 
-#Исходные переменные
-n = 2699
-x = [0,0,0,0,0,0]
+# 1. Подбросить кубик 2687 раз
+n = 2687
+rolls = np.random.randint(1, 7, size=n)
 
-#Таблица
-t = PrettyTable()
-t.field_names = []
-t.hrules=True
-t.vrules=True
+# 2. Определить частоты и частости
+frequencies, counts = np.unique(rolls, return_counts=True)
+relative_frequencies = counts / n
 
-#Вычисления
-for i in range(n):
-    h = random.randint(0,5)
-    x[h]+=1
+print("Значение:      ", frequencies)
+print("Частоты:       ", counts)
+print("Частости:      ", relative_frequencies)
 
-#Создание таблицы и графиков
-t.add_column("X",list(map(lambda z: z+1, range(len(x)))))
-t.add_column("Ni",[i for i in x])
-t.add_column("Pi",list(map(lambda z: str(z)+"/"+str(n), [i for i in x])))
+# 3. Построить частотный вариационный ряд
+freq_var_row = dict(zip(frequencies, counts))
+print("Частотный вариационный ряд:", freq_var_row)
 
-#Вывод
-print(t)
-print("X - Значение\nNi - Частота\nPi - Частость")
-print(f"Мода: {x.index(max(x))+1}, Медиана: 3, 4")
-
-t = list(map(lambda z: str(z+1), range(len(x)))) #массив
-s = x #массив
-plt.figure(figsize=(9, 3))
-plt.subplot(131)
-plt.bar(t,x)
-for i in x:
-    plt.annotate(str(i),xy=(x.index(i)-0.45,i+5))
-plt.ylim(0,600)
+# 4. Построить гистограмму частот
+plt.bar(frequencies, counts, width=0.6, color='b', alpha=0.7)
+plt.xlabel('Значение на кубике')
+plt.ylabel('Частота')
+plt.title('Гистограмма частот')
 plt.show()
 
-#https://matplotlib.online/project?id=0
+# 5. Записать и построить эмпирическую функцию распределения
+empirical_distribution = np.cumsum(relative_frequencies)
+plt.step(frequencies, empirical_distribution, where='mid', label='Эмпирическая функция распределения')
+plt.xlabel('Значение на кубике')
+plt.ylabel('Кумулятивная частота')
+plt.title('Эмпирическая функция распределения')
+plt.legend()
+plt.show()
+
+# 6. Вычислить выборочное среднее, выборочную дисперсию и выборочное среднеквадратическое отклонение
+sample_mean = np.mean(rolls)
+sample_variance = np.var(rolls, ddof=0)
+sample_std_dev = np.std(rolls, ddof=0)
+
+print("Выборочное среднее:", sample_mean)
+print("Выборочная дисперсия:", sample_variance)
+print("Выборочное среднеквадратическое отклонение:", sample_std_dev)
+
+# 7. Определить исправленную дисперсию и исправленное среднеквадратическое отклонение
+corrected_variance = np.var(rolls, ddof=1)
+corrected_std_dev = np.std(rolls, ddof=1)
+
+print("Исправленная дисперсия:", corrected_variance)
+print("Исправленное среднеквадратическое отклонение:", corrected_std_dev)
+
+# 8. Найти моду и медиану
+mode_result = stats.mode(rolls)
+mode_value = mode_result.mode
+median = np.median(rolls)
+
+print("Мода:", mode_value)
+print("Медиана:", median)
+
+# 9. Найти коэффициент вариации
+coefficient_of_variation = (sample_std_dev / sample_mean) * 100
+
+print("Коэффициент вариации (%):", coefficient_of_variation)
+
+# 10. Вычислить среднее линейное отклонение
+mean_absolute_deviation = np.mean(np.abs(rolls - sample_mean))
+
+print("Среднее линейное отклонение:", mean_absolute_deviation)
+
+# 11. Найти асимметрию
+skewness = stats.skew(rolls)
+
+print("Асимметрия:", skewness)
+
+# 12. Найти эксцесс
+kurtosis = stats.kurtosis(rolls)
+
+print("Эксцесс:", kurtosis)

@@ -1,0 +1,97 @@
+@font-face{
+	font-family: del;
+	src: url("fonts/del.ttf");
+}
+
+html{
+	background-color: #454545;
+}
+
+body{
+	max-width: 300px;
+}
+
+*{
+	margin: 0;
+	font-family:del;
+}
+
+main{
+	height: 400px;
+	overflow-y: scroll;
+}
+main::-webkit-scrollbar{
+	width: 12px;
+}
+main::-webkit-scrollbar-track {
+	background: none;        /* цвет дорожки */
+}
+main::-webkit-scrollbar-thumb {
+	background-color: #b3b3b3;    /* цвет плашки */
+	border-radius: 20px;       /* закругления плашки */
+	border: 3px solid #454545;  /* padding вокруг плашки */
+  }
+
+
+.token, .mainacc, .dropcon{
+	color: whitesmoke;
+	padding:5px;
+	background-color: #454545;
+	border: solid 2px #b3b3b3;
+	width: fit-content;
+	border-radius: 10px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.drop {
+    position: relative;
+    display: inline-block;
+}
+
+.dropcon {
+    display: none;
+    position: absolute;
+	padding-bottom:0px;
+	margin-top: 32px;
+	margin-left: 5px;
+}
+
+.dropcon input{
+	color: whitesmoke;
+	background-color: #454545;
+	border: solid 2px #b3b3b3;
+	border-radius: 5px;
+	text-indent: 3px;
+	margin-bottom: 5px;
+}
+
+.drop:hover .dropcon {display: block;}
+.drop:hover .token{
+	color: #454545;
+	padding:5px;
+	background-color: #b3b3b3;
+	border: solid 2px whitesmoke;
+}
+
+.mainacc:hover{
+	color: #454545;
+	padding:5px;
+	background-color: #b3b3b3;
+	border: solid 2px whitesmoke;
+}
+
+.mainacc:active {
+	color: whitesmoke;
+	padding:5px;
+	background-color: darkcyan;
+	border: solid 2px whitesmoke;
+}
+
+.token{
+	float: left;
+}
+
+.mainacc{
+	float: right;
+}

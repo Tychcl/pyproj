@@ -6,23 +6,38 @@ str = "-15.536759561549772 38.32170754074998 23.984390321619106 41.7003104386584
 mas = sorted(list(map(lambda z: round(float(z),2), str.split(" "))))
 Xmax = max(mas)
 Xmin = min(mas)
+n = len(mas)
 #1)
 R = Xmax - Xmin
-h = round(R/(1+ math.log2(len(mas))),2)
-#2-3)
+h = round(R/(1+ math.log2(n)),2)
+#2)
+intervals = np.arange(Xmin, Xmax + h, h)
+#3)
+# Определение эмпирических частот
+hist, bin_edges = np.histogram(mas, bins=intervals)
 
-n = len(mas)
-k = int(round(1+3.22*math.log10(n),0))
-d = R/(k-1)
-c1 = Xmin - 0.5*d
-ms = [c1]
-while ms[len(ms)-1]+d < Xmax:
-    ms.append(ms[len(ms)-1]+d)
+# Объединение интервалов, если частота меньше 5
+def merge_intervals(hist, bin_edges):
+    new_hist = []
+    new_edges = [bin_edges[0]]
+    i = 0
+    while i < len(hist):
+        if hist[i] < 5 and i < len(hist) - 1:
+            new_hist.append(hist[i] + hist[i + 1])
+            new_edges.append(bin_edges[i + 2])
+            i += 2
+        else:
+            new_hist.append(hist[i])
+            new_edges.append(bin_edges[i + 1])
+            i += 1
+    return np.array(new_hist), np.array(new_edges)
 
-ms2 = []
-gg = Xmin
-for i in range(k):
-    ms2.append([round(gg,2),round(gg+h,2)])
-    gg += h
-for i in ms2:
-    print(f"{i[0]} ; {i[1]} | {round(sum(i)/2,2)}")
+hist, bin_edges = merge_intervals(hist, bin_edges)
+
+print(f"Xmax = {Xmax}; Xmin = {Xmin}")
+print(f"1) R = {R} h = {h}")
+print("2) Интервалы:", intervals)
+print("3) Эмпирические частоты:", hist)
+print("Интервалы после объединения:", bin_edges)
+for i in range(len(bin_edges)-1):
+    print(f"{round(bin_edges[i],2)} ; {round(bin_edges[i+1],2)} | {round((bin_edges[i] + bin_edges[i+1])/2,2)} | {hist[i]}")
